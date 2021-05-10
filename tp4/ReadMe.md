@@ -242,7 +242,7 @@ dev1;
 ```create role Dev;
 create role Test;
 create role DevSecOps;
----
+
 ```
 ```GRANT 
 CREATE PROCEDURE,
@@ -254,13 +254,13 @@ SELECT ANY TABLE,
 ALTER ANY TABLE,
 DROP ANY TABLE
 TO Dev;
----
+
 ```
-```GRANT CONNECT,SELECT ANY TABLE,CREATE SESSION to Test;
----
 ```
-```GRANT ALL PRIVILEGES TO DevSecOps WITH ADMIN OPTION;
----
+GRANT CONNECT,SELECT ANY TABLE,CREATE SESSION to Test;
+```
+```
+GRANT ALL PRIVILEGES TO DevSecOps WITH ADMIN OPTION;
 ```
 
 
@@ -272,7 +272,7 @@ TO Dev;
 ---
 ```
 ```GRANT Test to tester1,tester2;
----
+
 ```
 ```GRANT DevSecOps to devsecops1,devsecops2;
 ---
