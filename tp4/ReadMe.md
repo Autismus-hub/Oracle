@@ -169,7 +169,8 @@ ________________________________________________________________________________
       * [ username: devsecops2, password: devsecops2 ]
 
 
-```CREATE USER dev1 IDENTIFIED by dev1;
+```
+CREATE USER dev1 IDENTIFIED by dev1;
 CREATE USER dev2 IDENTIFIED by dev2;
 CREATE USER tester1 IDENTIFIED by tester1;
 CREATE USER tester2 IDENTIFIED by tester2;
@@ -188,7 +189,8 @@ CREATE USER devsecops2 IDENTIFIED by devsecops2
      * Création de session.
      * Création,lecture, modification de structure et suppression de tables.
 
-```GRANT
+```
+GRANT
 CREATE PROCEDURE,
 CREATE VIEW,
 CREATE SEQUENCE,
@@ -198,7 +200,7 @@ SELECT ANY TABLE,
 ALTER ANY TABLE ,
 DROP ANY TABLE
 TO dev1;
----
+
 ```
 
 ¤   **Une fois qu'un utilisateur est créé, le DBA peut octroyer des privilèges de système spécifiques à cet utilisateur.**
@@ -206,7 +208,8 @@ TO dev1;
  
    - **Révoquer tous les privilèges associès à l'utilisateur dev1 :** 
 
-```REVOKE 
+```
+REVOKE 
 CREATE PROCEDURE,
 CREATE VIEW,
 CREATE SEQUENCE,
@@ -217,7 +220,7 @@ ALTER ANY TABLE ,
 DROP ANY TABLE
 FROM 
 dev1;
----
+
 ```
 
  
@@ -239,12 +242,14 @@ dev1;
      
      C) Le rôle de l'équipe DevSecOps permet d'avoir tous les privilèges avec mode administrateur de la base:  
 
-```create role Dev;
+```
+create role Dev;
 create role Test;
 create role DevSecOps;
 
 ```
-```GRANT 
+```
+GRANT 
 CREATE PROCEDURE,
 CREATE VIEW,
 CREATE SEQUENCE,
@@ -268,25 +273,30 @@ GRANT ALL PRIVILEGES TO DevSecOps WITH ADMIN OPTION;
    - **Attribuer à chaque utilisateur, le rôle qui lui correspond:** 
   
 
-```GRANT Dev to dev1,dev2
----
 ```
-```GRANT Test to tester1,tester2;
+GRANT Dev to dev1,dev2
 
 ```
-```GRANT DevSecOps to devsecops1,devsecops2;
----
+```
+GRANT Test to tester1,tester2;
+
+```
+```
+GRANT DevSecOps to devsecops1,devsecops2;
+
 ```
 
    - **Limiter l'accès pour les testeurs de sorte qu'ils n'accèdent qu'à la table des employés "EMP":** 
   
 
-```REVOKE SELECT ANY TABLE from Test;
----
+```
+REVOKE SELECT ANY TABLE from Test;
+
 ```
 
- ```GRANT select on emp to Test;
----
+ ```
+ GRANT select on emp to Test;
+
 ```
  
  
@@ -294,18 +304,20 @@ GRANT ALL PRIVILEGES TO DevSecOps WITH ADMIN OPTION;
    - **Autoriser tous les utilisateurs sur le système pour interroger les données de la table EMP :** 
   
 
- ```GRANT select on emp to public;
----
+ ```
+ GRANT select on emp to public;
+
 ```
 
 **Retirer les privilèges attribuées aux admins, ainsi que les utilisateurs qui ont reçu leurs privilèges sur la table EMP par un membre de l'équipe devsecops:**
 
  
  
-```REVOKE
+```
+REVOKE
 ALL PRIVILEGES
 FROM devsecops;
----
+
 ```
 
 
@@ -322,7 +334,8 @@ FROM devsecops;
 
 
 
-```CREATE PROFILE devProfile 
+```
+CREATE PROFILE devProfile 
 LIMIT
 SESSIONS_PER_USER UNLIMITED
 CPU_PER_SESSION 10000
@@ -333,7 +346,7 @@ LOGICAL_READS_PER_CALL 1000
 PRIVATE_SGA 25K
 PASSWORD_LIFE_TIME 60
 PASSWORD_REUSE_TIME 10;
----
+
 ```
 
 
@@ -349,7 +362,8 @@ PASSWORD_REUSE_TIME 10;
   * ***Taille maximale de l'SGA privée:*** ***25K***
   * ***Durée de vie en jours du mot de passe:*** ***60***
   * ***Nombre maximal de réutilisations de mot de passe:*** ***10***
-```CREATE PROFILE testProfile
+```
+CREATE PROFILE testProfile
 LIMIT
 SESSIONS_PER_USER 5
 CPU_PER_SESSION UNLIMITED
@@ -360,7 +374,7 @@ LOGICAL_READS_PER_CALL 1000
 PRIVATE_SGA 25K
 PASSWORD_LIFE_TIME 60
 PASSWORD_REUSE_TIME 10;
----
+
 ```
 
 **Créer un profile de ressources dédié à l'équipe devsecops avec les limitations suivantes:**
@@ -374,7 +388,8 @@ PASSWORD_REUSE_TIME 10;
   * ***Durée de vie en jours du mot de passe:*** ***60***
   * ***Nombre maximal de réutilisations de mot de passe:*** ***10***
 
-```CREATE PROFILE devsecopsProfile 
+```
+CREATE PROFILE devsecopsProfile 
 LIMIT
 SESSIONS_PER_USER UNLIMITED
 CPU_PER_SESSION UNLIMITED
@@ -385,11 +400,12 @@ LOGICAL_READS_PER_CALL 5000
 PRIVATE_SGA 80K
 PASSWORD_LIFE_TIME 60
 PASSWORD_REUSE_TIME 10;
----
+
 ```
 
   - **Attribuer à l'utilisateur "dev1", le profile qui lui correspond:** 
-```ALTER USER dev1 PROFILE devProfile;
----
+```
+ALTER USER dev1 PROFILE devProfile;
+
 ```
 
